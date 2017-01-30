@@ -1,0 +1,21 @@
+---
+
+- name: Copy File To Remote Machine
+  copy:
+    src: "{{ cacerts_local_cert_location }}/{{ cacerts_cert_name }}"
+    dest: "{{ cacerts_remote_cert_location }}/{{ cacerts_cert_name }}"
+    owner: "{{ cacerts_remote_cert_owner }}"
+    group: "{{ cacerts_remote_cert_group }}"
+
+- name: Check If Alias Already Exists
+  register: __cacerts_ca_check
+  ignore_errors: yes
+  command: "{{ java_home }}/bin/keytool -noprompt -storepass {{ cacerts_store_pass }} -list -keystore {{ java_home }}/lib/security/cacerts -alias {{ cacerts_cert_alias }}"
+  changed_when: false
+  no_log: True
+
+- name: Import Certificate In Keystore
+  command: "{{java_home}}/bin/keytool -noprompt -storepass {{ cacerts_store_pass }} -keystore {{ java_home }}/lib/security/cacerts -import -file {{ cacerts_remote_cert_location }}/{{cacerts_cert_name}} -alias {{ cacerts_cert_alias }}"
+  when:
+    - "{{ 'keytool error: java.lang.Exception: Alias' in __cacerts_ca_check.stdout }}"
+    - "{{ 'does not exist' in __cacerts_ca_check.stdout }}"

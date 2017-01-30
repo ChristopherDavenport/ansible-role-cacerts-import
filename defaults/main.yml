@@ -1,0 +1,13 @@
+---
+
+# java_home is expected to be provided.
+#
+
+# cacerts_cert_name:
+# cacerts_cert_alias:
+# cacerts_local_cert_location:
+cacerts_remote_cert_location: /etc/ssl/certs
+cacerts_remote_cert_owner: root
+cacerts_remote_cert_group: root
+
+cacerts_store_pass: changeit
