@@ -1,10 +1,21 @@
 ---
 - hosts: localhost
+  vars:
+    cacerts_cert_name: mycertfile.pem
+    cacerts_cert_alias: mycertalias
+    cacerts_local_cert_location: /home/cert
   pre_tasks:
     - name: Update apt cache.
       apt: update_cache=yes
       changed_when: False
       when: ansible_os_family == 'Debian'
+    - name: Create a folder to hold cert
+      file:
+        path: "{{ cacerts_local_cert_location }}"
+        state: directory
+    - name: Download Cert From Google If Not Exists
+      shell: openssl s_client -showcerts -connect google.com:443 </dev/null 2>/dev/null|openssl x509 -outform PEM >{{ cacerts_local_cert_location }}/{{ cacerts_cert_name }}
+      creates: "{{ cacerts_local_cert_location }}/{{ cacerts_cert_name}}"
   roles:
     - ChristopherDavenport.universal-java
     - role_under_test
