@@ -3,7 +3,7 @@
   vars:
     cacerts:
       - name: google.pem
-        alias: google
+        alias: mygooglecertalias
         location: remote
         server: google.com
         port: "443"
