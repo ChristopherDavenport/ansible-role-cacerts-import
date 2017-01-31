@@ -9,6 +9,14 @@
       apt: update_cache=yes
       changed_when: False
       when: ansible_os_family == 'Debian'
+    - name: Install openssl
+      package:
+        name: openssl
+        state: present
+    - name: Create Cert Folder If It doesnt exist
+      file:
+        path: "{{ cacerts_remote_cert_location }}"
+        state: directory
     - name: Create a folder to hold cert
       file:
         path: "{{ cacerts_local_cert_location }}"
