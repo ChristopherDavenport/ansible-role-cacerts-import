@@ -15,7 +15,8 @@
         state: directory
     - name: Download Cert From Google If Not Exists
       shell: openssl s_client -showcerts -connect google.com:443 </dev/null 2>/dev/null|openssl x509 -outform PEM >{{ cacerts_local_cert_location }}/{{ cacerts_cert_name }}
-      creates: "{{ cacerts_local_cert_location }}/{{ cacerts_cert_name}}"
+      args:
+        creates: "{{ cacerts_local_cert_location }}/{{ cacerts_cert_name}}"
   roles:
     - ChristopherDavenport.universal-java
     - role_under_test
