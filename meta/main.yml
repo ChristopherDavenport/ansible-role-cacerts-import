@@ -1,6 +1,6 @@
 galaxy_info:
   author: Christopher Davenport
-  description: Universal Tomcat Installer
+  description: Import a Local Certificate into Cacerts
   company: Eckerd College
   license: MIT
 
