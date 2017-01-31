@@ -1,0 +1,8 @@
+---
+
+- name: Download Cert From Google If Not Exists
+  shell: openssl s_client -showcerts -connect {{ cacerts_cert.server }}:{{ cacerts_cert.port | default('443')}} </dev/null 2>/dev/null|openssl x509 -outform PEM >{{ cacerts_remote_cert_location }}/{{ cacerts_cert.name }}
+  args:
+    creates: "{{ cacerts_remote_cert_location }}/{{ cacerts_cert.name }}"
+
+- include: import.yml

@@ -1,0 +1,10 @@
+---
+
+- name: Copy File To Remote Machine
+  copy:
+    src: "{{ cacerts_cert.folder }}/{{ cacerts_cert.name }}"
+    dest: "{{ cacerts_remote_cert_location }}/{{ cacerts_cert.name }}"
+    owner: "{{ cacerts_remote_cert_owner }}"
+    group: "{{ cacerts_remote_cert_group }}"
+
+- include: import.yml
