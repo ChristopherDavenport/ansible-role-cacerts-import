@@ -5,7 +5,6 @@
   ignore_errors: yes
   command: "{{ java_home }}/bin/keytool -noprompt -storepass {{ cacerts_store_pass }} -list -keystore {{ java_home }}/lib/security/cacerts -alias {{ cacerts_cert.alias }}"
   changed_when: false
-  no_log: True
 
 - name: Import Certificate In Keystore
   command: "{{java_home}}/bin/keytool -noprompt -storepass {{ cacerts_store_pass }} -keystore {{ java_home }}/lib/security/cacerts -import -file {{ cacerts_remote_cert_location }}/{{ cacerts_cert.name }} -alias {{ cacerts_cert.alias }}"
