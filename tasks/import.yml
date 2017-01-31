@@ -2,9 +2,10 @@
 
 - name: Check If Alias Already Exists
   register: __cacerts_ca_check
-  ignore_errors: yes
   command: "{{ java_home }}/bin/keytool -noprompt -storepass {{ cacerts_store_pass }} -list -keystore {{ java_home }}/lib/security/cacerts -alias {{ cacerts_cert.alias }}"
   changed_when: false
+  failed_when:
+   - "'keytool error: java.lang.Exception: Keystore file does not exist' in {{ __cacerts_ca_check.stdout }}"
 
 - name: Import Certificate In Keystore
   command: "{{java_home}}/bin/keytool -noprompt -storepass {{ cacerts_store_pass }} -keystore {{ java_home }}/lib/security/cacerts -import -file {{ cacerts_remote_cert_location }}/{{ cacerts_cert.name }} -alias {{ cacerts_cert.alias }}"
