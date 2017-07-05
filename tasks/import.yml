@@ -10,5 +10,5 @@
     - "{{ 'keytool error: java.lang.Exception: Keystore file does not exist' in __cacerts_ca_check.stdout }}"
 
 - name: Import Certificate In Keystore
-  command: "{{java_home}}/bin/keytool -noprompt -storepass {{ cacerts_store_pass }} -keystore {{ java_home }}{% if ansible_os_family == 'Debian'  %}/jre{% endif %}/lib/security/cacerts -import -file {{ cacerts_remote_cert_location }}/{{ cacerts_cert.name }} -alias {{ cacerts_cert.alias }}"
+  command: "{{java_home}}/bin/keytool -noprompt -storepass {{ cacerts_store_pass }} -keystore {{ java_home }}/jre/lib/security/cacerts -import -file {{ cacerts_remote_cert_location }}/{{ cacerts_cert.name }} -alias {{ cacerts_cert.alias }}"
   when: __cacerts_ca_check|changed
